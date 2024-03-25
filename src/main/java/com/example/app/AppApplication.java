@@ -4,6 +4,7 @@ import com.example.app.Car.Car;
 import com.example.app.Car.CarRepository;
 import com.example.app.CarVIN.CarVIN;
 import com.example.app.CarVIN.CarVINRepository;
+import com.example.app.Driver.DriverRepository;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,7 +24,7 @@ public class AppApplication {
 	// create a user and add it in DB, need to mark as bea as this will be used by
 	// Hibernate to identify it
 	@Bean
-	CommandLineRunner commandLineRunner(CarRepository carRepository, InputReader inputInputReader , CarVINRepository carVINRepository) {
+	CommandLineRunner commandLineRunner(CarRepository carRepository, InputReader inputInputReader , CarVINRepository carVINRepository, DriverRepository driverRepository) {
 		return args -> {
 			int option=0;
 			do {
@@ -49,7 +50,8 @@ public class AppApplication {
 					}
 					case 2: {
 						try {
-							carRepository.findById(1L)
+							Long id = Long.parseLong(inputInputReader.readInput("Enter your id:"));
+							carRepository.findById(id)
 									.
 							ifPresentOrElse((c -> System.out.println(c)),
 							()->{System.out.println("Not found");});
